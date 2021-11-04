@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import ActivityCard from './ActivityCard';
+import ActivitiesContext from '../Context/ActivitiesContext';
 
 function ActivitiesList() {
-  const dez = [1, 2, 0]; // Apenas para "pegar o estado"
+  const { data } = useContext(ActivitiesContext);
   return (
     <div>
       <h1>Sua lista de Atividades</h1>
       <Link to="/InsertActivity">Adicionar Atividade</Link>
-      {dez.map((x, i) => <ActivityCard key={ i } />)}
-
+      {data.map((e, i) => (
+        <ActivityCard key={ i } data={ e } />
+      ))}
     </div>
   );
 }

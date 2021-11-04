@@ -13,4 +13,17 @@ async function postActivityToAPI(e) {
   await fetch('http://localhost:3002/Activities', options).then((response) => response.json());
 }
 
-module.exports = { postActivityToAPI };
+async function deleteActivityToAPI(id) {
+  const options = {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id }),
+  };
+  console.log(id);
+  await fetch('http://localhost:3002/Activities', options).then((response) => response.json());
+}
+
+module.exports = { postActivityToAPI, deleteActivityToAPI };
