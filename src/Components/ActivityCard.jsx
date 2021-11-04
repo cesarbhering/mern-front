@@ -12,9 +12,9 @@ function ActivityCard() {
       <h3>Descrição</h3>
       <h4>Data: 13/12/2021</h4>
       <select id="status">
-        <option value="pending">Pendente</option>
-        <option value="ongoing">Em Andamento</option>
-        <option value="done">Pronto</option>
+        <option value="Pendente">Pendente</option>
+        <option value="Em Andamento">Em Andamento</option>
+        <option value="Pronto">Pronto</option>
       </select>
       <button type="button"> Excluir </button>
       <button type="button"> Editar </button>
