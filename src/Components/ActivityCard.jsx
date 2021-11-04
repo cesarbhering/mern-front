@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import ActivitiesContext from '../Context/ActivitiesContext';
-import { deleteActivityToAPI } from '../Utils/useAPI';
+import { deleteActivityToAPI, updateActivityToAPI } from '../Utils/useAPI';
 
 function handleDelete(id) {
   deleteActivityToAPI(id);
@@ -31,7 +31,14 @@ function ActivityCard(props) {
           .reverse()
           .join('/')}`}
       </h5>
-      <select id="status" onChange={ () => null }>
+      <select
+        id="status"
+        onChange={ (event) => {
+          const { value } = event.target;
+          updateActivityToAPI({ _id, name, description, status: value });
+          setRerender(!rerender);
+        } }
+      >
         <option value="Pendente">Pendente</option>
         <option value="Em Andamento">Em Andamento</option>
         <option value="Pronto">Pronto</option>

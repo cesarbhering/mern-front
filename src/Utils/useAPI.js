@@ -26,11 +26,12 @@ async function deleteActivityToAPI(id) {
   await fetch(API_URL, options).then((response) => response.json());
 }
 
-async function updateActivityToAPI(id) {
+async function updateActivityToAPI(activityInfo) {
+  const { _id, name, description, status } = activityInfo;
   const options = {
     method: 'PUT',
     headers: headersInfo,
-    body: JSON.stringify({ id }),
+    body: JSON.stringify({ _id, name, description, status }),
   };
   await fetch(API_URL, options).then((response) => response.json());
 }
