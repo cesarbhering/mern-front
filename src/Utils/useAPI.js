@@ -1,29 +1,37 @@
+const headersInfo = {
+  Accept: 'application/json, text/plain, */*',
+  'Content-Type': 'application/json',
+};
+
+const API_URL = 'http://localhost:3002/Activities';
+
 async function postActivityToAPI(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
   const formProps = Object.fromEntries(formData);
   const options = {
     method: 'POST',
-    headers: {
-      Accept: 'application/json, text/plain, */*',
-      'Content-Type': 'application/json',
-    },
+    headers: headersInfo,
     body: JSON.stringify(formProps),
   };
-  await fetch('http://localhost:3002/Activities', options).then((response) => response.json());
+  await fetch(API_URL, options).then((response) => response.json());
 }
 
 async function deleteActivityToAPI(id) {
   const options = {
     method: 'DELETE',
-    headers: {
-      Accept: 'application/json, text/plain, */*',
-      'Content-Type': 'application/json',
-    },
+    headers: headersInfo,
     body: JSON.stringify({ id }),
   };
-  console.log(id);
-  await fetch('http://localhost:3002/Activities', options).then((response) => response.json());
+  await fetch(API_URL, options).then((response) => response.json());
 }
 
-module.exports = { postActivityToAPI, deleteActivityToAPI };
+async function updateActivityToAPI(id) {
+  const options = {
+    method: 'PUT',
+    headers: headersInfo,
+    body: JSON.stringify({ id }),
+  };
+  await fetch(API_URL, options).then((response) => response.json());
+}
+module.exports = { postActivityToAPI, deleteActivityToAPI, updateActivityToAPI };

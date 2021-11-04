@@ -31,7 +31,7 @@ function ActivityCard(props) {
           .reverse()
           .join('/')}`}
       </h5>
-      <select id="status">
+      <select id="status" onChange={ () => null }>
         <option value="Pendente">Pendente</option>
         <option value="Em Andamento">Em Andamento</option>
         <option value="Pronto">Pronto</option>
