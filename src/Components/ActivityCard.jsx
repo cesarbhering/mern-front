@@ -7,6 +7,22 @@ function handleDelete(id) {
   deleteActivityToAPI(id);
 }
 
+function handleEditBtn(event) {
+  const { target } = event;
+  const allEditableFields = document.querySelectorAll('[contenteditable]');
+  allEditableFields.forEach((field) => {
+    if (field.getAttribute('contenteditable') === 'true') {
+      field.setAttribute('contenteditable', false);
+      field.setAttribute('style', 'background-color: red');
+      target.innerText = 'Editar';
+    } else {
+      field.setAttribute('contenteditable', true);
+      field.setAttribute('style', 'background-color: white');
+      target.innerText = 'Salvar';
+    }
+  });
+}
+
 function ActivityCard(props) {
   const divStyle = {
     margin: '40px',
@@ -19,10 +35,13 @@ function ActivityCard(props) {
   const { setRerender, rerender } = useContext(ActivitiesContext);
   return (
     <div className="activityCard" style={ divStyle }>
-      <h2>{name}</h2>
-      <h3>{description}</h3>
-      <h4>{status}</h4>
-      <h5>
+      <h2 contentEditable="false" suppressContentEditableWarning id="name">
+        {name}
+      </h2>
+      <h3 contentEditable="false" suppressContentEditableWarning id="description">
+        {description}
+      </h3>
+      <h5 id="date">
         {/* https://stackoverflow.com/questions/38549256/how-to-convert-isostring-to-date-format-dd-mm-yyyy-using-javascript */}
         {`Criada em: ${date
           .toString()
@@ -33,9 +52,10 @@ function ActivityCard(props) {
       </h5>
       <select
         id="status"
-        onChange={ (event) => {
+        defaultValue={ status }
+        onChange={ async (event) => {
           const { value } = event.target;
-          updateActivityToAPI({ _id, name, description, status: value });
+          await updateActivityToAPI({ _id, name, description, status: value });
           setRerender(!rerender);
         } }
       >
@@ -54,7 +74,23 @@ function ActivityCard(props) {
         Excluir
         {' '}
       </button>
-      <button type="button"> Editar </button>
+      <button
+        type="button"
+        onClick={ async (event) => {
+          if (event.target.innerText === 'Salvar') {
+            await updateActivityToAPI({
+              _id,
+              name: document.getElementById('name').innerText,
+              description: document.getElementById('description').innerText,
+              status: document.getElementById('status').value,
+            });
+            setRerender(!rerender);
+          }
+          handleEditBtn(event);
+        } }
+      >
+        Editar
+      </button>
     </div>
   );
 }
