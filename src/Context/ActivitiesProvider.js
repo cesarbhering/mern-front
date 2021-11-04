@@ -4,6 +4,7 @@ import ActivitiesContext from './ActivitiesContext';
 
 function ActivitiesProvider({ children }) {
   const [data, setData] = useState([]);
+  const [rerender, setRerender] = useState(false);
 
   useEffect(() => {
     const getActivities = async () => {
@@ -13,11 +14,12 @@ function ActivitiesProvider({ children }) {
       setData(results);
     };
     getActivities();
-  }, []);
+  }, [rerender]);
 
   const contextValue = {
-    setData,
     data,
+    rerender,
+    setRerender,
   };
 
   return (

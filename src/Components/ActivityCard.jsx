@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import ActivitiesContext from '../Context/ActivitiesContext';
 import { deleteActivityToAPI } from '../Utils/useAPI';
 
 function handleDelete(id) {
@@ -12,7 +13,10 @@ function ActivityCard(props) {
     border: '5px solid pink',
     backgroundColor: 'red',
   };
-  const { data: { name, description, status, date, _id } } = props;
+  const {
+    data: { name, description, status, date, _id },
+  } = props;
+  const { setRerender, rerender } = useContext(ActivitiesContext);
   return (
     <div className="activityCard" style={ divStyle }>
       <h2>{name}</h2>
@@ -26,14 +30,23 @@ function ActivityCard(props) {
           .split('-')
           .reverse()
           .join('/')}`}
-
       </h5>
       <select id="status">
         <option value="Pendente">Pendente</option>
         <option value="Em Andamento">Em Andamento</option>
         <option value="Pronto">Pronto</option>
       </select>
-      <button type="button" onClick={ () => handleDelete(_id) }> Excluir </button>
+      <button
+        type="button"
+        onClick={ () => {
+          handleDelete(_id);
+          setRerender(!rerender);
+        } }
+      >
+        {' '}
+        Excluir
+        {' '}
+      </button>
       <button type="button"> Editar </button>
     </div>
   );
